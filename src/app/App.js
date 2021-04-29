@@ -78,11 +78,17 @@ class App extends Component {
   // }
 
   handlePrevPage = () => {
-    console.log('prev page');
+    this.setState(state => {
+      return {
+        page: Math.max(state.page - 1, 1)
+      };
+    });
   }
 
   handleNextPage = () => {
-    console.log('next page');
+    this.setState(state => {
+      return { page: state.page + 1 };
+    });
   }
 
   render() {

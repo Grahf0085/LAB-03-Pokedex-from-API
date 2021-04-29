@@ -15,7 +15,11 @@ export default class Paging extends Component {
     return (
       <form className="Paging" onSubmit={this.handleSubmit}>
 
-        <button className="prev" onClick={onPrev}>◀</button>
+        <button
+          className="prev"
+          onClick={onPrev}
+          disabled={page < 2}
+        >◀</button>
         <span>Page {page}</span>
         <button className="next" onClick={onNext}>▶</button>
 
