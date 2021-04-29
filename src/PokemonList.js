@@ -3,15 +3,19 @@ import './PokemonList.css';
 import PokemonItem from './PokemonItem';
 
 export default class PokemonList extends Component {
+
   render() {
+
+    const pokemon = this.props.pokemon;
+
     return (
+
       <ul className="PokemonList">
-        <PokemonItem />
-        <PokemonItem />
-        <PokemonItem />
-        <PokemonItem />
-        <PokemonItem />
+        {pokemon.map(poke => (
+          <PokemonItem key={poke._id} pokemon={poke} />
+        ))}
       </ul>
+
     );
   }
 }
