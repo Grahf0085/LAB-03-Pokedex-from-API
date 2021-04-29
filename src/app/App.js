@@ -3,6 +3,7 @@ import './App.css';
 import React from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import PokemonList from '../PokemonList';
 
 class App extends Component {
 
@@ -14,7 +15,7 @@ class App extends Component {
         <Header />
 
         <main>
-
+          <PokemonList />
         </main>
 
         <Footer />
