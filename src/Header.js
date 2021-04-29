@@ -4,7 +4,7 @@ import './Header.css';
 export default class Header extends Component {
   render() {
     return (
-      <header className="Header">
+      <header className="header">
         <h1>Header</h1>
       </header>
     );

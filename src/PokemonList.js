@@ -7,6 +7,10 @@ export default class PokemonList extends Component {
     return (
       <ul>
         <PokemonItem />
+        <PokemonItem />
+        <PokemonItem />
+        <PokemonItem />
+        <PokemonItem />
       </ul>
     );
   }
