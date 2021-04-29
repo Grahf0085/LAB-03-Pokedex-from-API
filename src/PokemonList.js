@@ -6,7 +6,7 @@ export default class PokemonList extends Component {
 
   render() {
 
-    const pokemon = this.props.pokemon;
+    const { pokemon } = this.props;
 
     return (
 

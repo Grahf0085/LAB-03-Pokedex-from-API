@@ -4,50 +4,58 @@ import React from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import PokemonList from '../PokemonList';
-import pokemon from '../pokemon';
 import PokemonSearch from '../PokemonSearch';
 import request from 'superagent';
+import Paging from '../Paging';
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
 
-const pokemonShape = [...new Set(pokemon.map(poke => poke.shape))];
-const pokemonType = [...new Set(pokemon.map(poke => poke.type_1))];
+// const pokemonShape = [...new Set(pokemon.map(poke => poke.shape))];
+// const pokemonType = [...new Set(pokemon.map(poke => poke.type_1))];
 
 class App extends Component {
 
   state = {
-    poke: []
+    pokemon: []
   }
 
   async componentDidMount() {
     const response = await request.get(POKEMON_API_URL);
-    console.log(response.body);
+    this.setState({ pokemon: response.body.results });
   }
 
-  handleSearch = ({ nameSearch, typeFilter, sortField }) => {
+  handleSearch = async ({ search }) => {
+    const response = await request
+      .get(POKEMON_API_URL)
+      .query({ name: search });
 
-    const nameRegex = new RegExp(nameSearch, 'i');
-
-    const searchData = pokemon
-      .filter(pokeOne => {
-        return !nameSearch || pokeOne.pokemon.match(nameRegex);
-      })
-      .filter(pokeOne => {
-        return !typeFilter || pokeOne.type_1 === typeFilter;
-      })
-      .sort((a, b) => {
-        if (a[sortField] < b[sortField]) return 1;
-        if (a[sortField] > b[sortField]) return -1;
-        return 0;
-      });
-    console.log(sortField);
-    this.setState({ poke: searchData });
-
+    this.setState({ pokemon: response.body.results });
   }
+
+  // handleSearch = ({ nameSearch, typeFilter, sortField }) => {
+
+  //   const nameRegex = new RegExp(nameSearch, 'i');
+
+  //   const searchData = pokemon
+  //     .filter(pokeOne => {
+  //       return !nameSearch || pokeOne.pokemon.match(nameRegex);
+  //     })
+  //     .filter(pokeOne => {
+  //       return !typeFilter || pokeOne.type_1 === typeFilter;
+  //     })
+  //     .sort((a, b) => {
+  //       if (a[sortField] < b[sortField]) return 1;
+  //       if (a[sortField] > b[sortField]) return -1;
+  //       return 0;
+  //     });
+  //   console.log(sortField);
+  //   this.setState({ poke: searchData });
+
+  // }
 
   render() {
 
-    const { poke } = this.state;
+    const { pokemon } = this.state;
 
     return (
 
@@ -55,11 +63,16 @@ class App extends Component {
 
         <Header />
 
-        <PokemonSearch shape={pokemonShape} types={pokemonType} onSearch={this.handleSearch} />
+        {/* <PokemonSearch shape={pokemonShape} types={pokemonType} onSearch={this.handleSearch} /> */}
+
+        <section className="search-options">
+          <PokemonSearch onSearch={this.handleSearch} />
+          <Paging />
+        </section>
 
         <main>
 
-          <PokemonList pokemon={poke} />
+          <PokemonList pokemon={pokemon} />
 
         </main>
 

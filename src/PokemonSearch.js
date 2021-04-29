@@ -4,22 +4,24 @@ import './PokemonSearch.css';
 export default class PokemonSearch extends Component {
 
   state = {
-    nameSearch: '',
-    typeFilter: '',
-    sortField: ''
+    search: ''
   }
 
-  handleNameSearch = ({ target }) => {
-    this.setState({ nameSearch: target.value });
+  handleSearchChange = ({ target }) => {
+    this.setState({ search: target.value });
   }
 
-  handleTypeFilter = ({ target }) => {
-    this.setState({ typeFilter: target.value });
-  }
+  // handleNameSearch = ({ target }) => {
+  //   this.setState({ nameSearch: target.value });
+  // }
 
-  handleSortField = ({ target }) => {
-    this.setState({ sortField: target.value });
-  }
+  // handleTypeFilter = ({ target }) => {
+  //   this.setState({ typeFilter: target.value });
+  // }
+
+  // handleSortField = ({ target }) => {
+  //   this.setState({ sortField: target.value });
+  // }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -34,14 +36,22 @@ export default class PokemonSearch extends Component {
 
   render() {
 
-    const { nameSearch, typeFilter, sortField } = this.state;
-    const { types, shape } = this.props;
+    const { search } = this.state;
+
+    // const { nameSearch, typeFilter, sortField } = this.state;
+    // const { types, shape } = this.props;
 
     return (
 
       <form className="PokemonSearch" onSubmit={this.handleSubmit}>
 
-        <select
+        <input
+          name="search"
+          value={search}
+          onChange={this.handleSearchChange}
+        />
+
+        {/* <select
           name="typeFilter"
           value={typeFilter}
           onChange={this.handleTypeFilter}
@@ -72,7 +82,7 @@ export default class PokemonSearch extends Component {
             <option key={aShape} value={aShape}>{aShape}</option>
           ))}
 
-        </select>
+        </select> */}
 
       </form>
 
