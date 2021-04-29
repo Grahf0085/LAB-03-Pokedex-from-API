@@ -31,13 +31,17 @@ class App extends Component {
   //   this.setState({ pokemon: response.body.results });
   // }
 
-  async fetchPokemon(search) {
+  async fetchPokemon() {
+
+    const { search, page } = this.state;
+
     this.setState({ loading: true });
 
     try {
       const response = await request
         .get(POKEMON_API_URL)
-        .query({ pokemon: search });
+        .query({ pokemon: search })
+        .query({ page: page });
 
       this.setState({ pokemon: response.body.results });
     }
@@ -52,8 +56,10 @@ class App extends Component {
   }
 
   handleSearch = ({ search }) => {
-    this.setState({ search: search });
-    this.fetchPokemon(search);
+    this.setState(
+      { search: search, page: 1 },
+      () => this.fetchPokemon()
+    );
   }
 
   // handleSearch = ({ nameSearch, typeFilter, sortField }) => {
@@ -78,17 +84,17 @@ class App extends Component {
   // }
 
   handlePrevPage = () => {
-    this.setState(state => {
-      return {
-        page: Math.max(state.page - 1, 1)
-      };
-    });
+    this.setState(
+      { page: Math.max(this.state.page - 1, 1) },
+      () => this.fetchPokemon()
+    );
   }
 
   handleNextPage = () => {
-    this.setState(state => {
-      return { page: state.page + 1 };
-    });
+    this.setState(
+      { page: Math.max(this.state.page + 1, 1) },
+      () => this.fetchPokemon()
+    );
   }
 
   render() {
