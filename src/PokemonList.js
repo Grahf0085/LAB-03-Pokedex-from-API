@@ -5,7 +5,7 @@ import PokemonItem from './PokemonItem';
 export default class PokemonList extends Component {
   render() {
     return (
-      <ul>
+      <ul className="PokemonList">
         <PokemonItem />
         <PokemonItem />
         <PokemonItem />
