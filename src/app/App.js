@@ -16,7 +16,7 @@ const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
 class App extends Component {
 
   state = {
-    pokemon: []
+    pokemon: null
   }
 
   componentDidMount() {
@@ -80,7 +80,12 @@ class App extends Component {
 
         <main>
 
-          <PokemonList pokemon={pokemon} />
+          {/* <PokemonList pokemon={pokemon} /> */}
+
+          {pokemon && pokemon.length
+            ? <PokemonList pokemon={pokemon} />
+            : <p>Sorry no pokes for you</p>
+          }
 
         </main>
 
