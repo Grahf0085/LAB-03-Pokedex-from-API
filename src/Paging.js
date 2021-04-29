@@ -10,12 +10,14 @@ export default class Paging extends Component {
 
   render() {
 
+    const { page, onPrev, onNext } = this.props;
+
     return (
       <form className="Paging" onSubmit={this.handleSubmit}>
 
-        <button className="prev">◀</button>
-        <span>Page 1</span>
-        <button className="next">▶</button>
+        <button className="prev" onClick={onPrev}>◀</button>
+        <span>Page {page}</span>
+        <button className="next" onClick={onNext}>▶</button>
 
       </form>
     );

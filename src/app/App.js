@@ -77,9 +77,17 @@ class App extends Component {
 
   // }
 
+  handlePrevPage = () => {
+    console.log('prev page');
+  }
+
+  handleNextPage = () => {
+    console.log('next page');
+  }
+
   render() {
 
-    const { pokemon, loading } = this.state;
+    const { pokemon, loading, page } = this.state;
 
     return (
 
@@ -91,7 +99,11 @@ class App extends Component {
 
         <section className="search-options">
           <PokemonSearch onSearch={this.handleSearch} />
-          <Paging />
+          <Paging
+            page={page}
+            onPrev={this.handlePrevPage}
+            onNext={this.handleNextPage}
+          />
         </section>
 
         <main>
