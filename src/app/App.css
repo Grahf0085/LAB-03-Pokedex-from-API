@@ -1,8 +1,6 @@
 .App {
+  height: 100vh;
   display: grid;
-}
-
-/* TODO: remove **/
-img {
-  margin: 50px auto;
+  grid-template-rows: auto 1fr auto;
+  background-color: #BBC8CA;
 }
