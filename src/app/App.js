@@ -19,17 +19,25 @@ class App extends Component {
     pokemon: []
   }
 
-  async componentDidMount() {
-    const response = await request.get(POKEMON_API_URL);
+  componentDidMount() {
+    this.fetchPokemon();
+  }
+
+  // async componentDidMount() {
+  //   const response = await request.get(POKEMON_API_URL);
+  //   this.setState({ pokemon: response.body.results });
+  // }
+
+  async fetchPokemon(search) {
+    const response = await request
+      .get(POKEMON_API_URL)
+      .query({ pokemon: search });
+
     this.setState({ pokemon: response.body.results });
   }
 
-  handleSearch = async ({ search }) => {
-    const response = await request
-      .get(POKEMON_API_URL)
-      .query({ name: search });
-
-    this.setState({ pokemon: response.body.results });
+  handleSearch = ({ search }) => {
+    this.fetchPokemon(search);
   }
 
   // handleSearch = ({ nameSearch, typeFilter, sortField }) => {
