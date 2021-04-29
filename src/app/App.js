@@ -17,7 +17,9 @@ class App extends Component {
 
   state = {
     pokemon: null,
-    loading: false
+    loading: false,
+    search: '',
+    page: 1
   }
 
   componentDidMount() {
@@ -50,6 +52,7 @@ class App extends Component {
   }
 
   handleSearch = ({ search }) => {
+    this.setState({ search: search });
     this.fetchPokemon(search);
   }
 
