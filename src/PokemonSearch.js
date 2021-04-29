@@ -35,7 +35,7 @@ export default class PokemonSearch extends Component {
   render() {
 
     const { nameSearch, typeFilter, sortField } = this.state;
-    const { types } = this.props;
+    const { types, shape } = this.props;
 
     return (
 
@@ -66,7 +66,13 @@ export default class PokemonSearch extends Component {
           name="sortField"
           value={sortField}
           onChange={this.handleSortField}
-        ></select>
+        >
+          <option value="">Shape</option>
+          {shape.map(aShape => (
+            <option key={aShape} value={aShape}>{aShape}</option>
+          ))}
+
+        </select>
 
       </form>
 
