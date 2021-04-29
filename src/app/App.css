@@ -8,3 +8,11 @@
 .App main {
   overflow: auto;
 }
+
+.loading {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 500px;
+  object-fit: contain;
+}

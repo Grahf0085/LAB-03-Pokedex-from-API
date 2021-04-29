@@ -16,7 +16,8 @@ const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
 class App extends Component {
 
   state = {
-    pokemon: null
+    pokemon: null,
+    loading: false
   }
 
   componentDidMount() {
@@ -29,11 +30,23 @@ class App extends Component {
   // }
 
   async fetchPokemon(search) {
-    const response = await request
-      .get(POKEMON_API_URL)
-      .query({ pokemon: search });
+    this.setState({ loading: true });
 
-    this.setState({ pokemon: response.body.results });
+    try {
+      const response = await request
+        .get(POKEMON_API_URL)
+        .query({ pokemon: search });
+
+      this.setState({ pokemon: response.body.results });
+    }
+
+    catch (err) {
+      console.log(err);
+    }
+
+    finally {
+      this.setState({ loading: false });
+    }
   }
 
   handleSearch = ({ search }) => {
@@ -63,7 +76,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon } = this.state;
+    const { pokemon, loading } = this.state;
 
     return (
 
@@ -82,10 +95,12 @@ class App extends Component {
 
           {/* <PokemonList pokemon={pokemon} /> */}
 
-          {pokemon && pokemon.length
+          {pokemon && (pokemon.length
             ? <PokemonList pokemon={pokemon} />
-            : <p>Sorry no pokes for you</p>
+            : <p>Sorry no pokes for you</p>)
           }
+
+          {loading && <img className="loading" src="loading.gif" alt="loading" />}
 
         </main>
 
