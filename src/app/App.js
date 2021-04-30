@@ -19,8 +19,7 @@ class App extends Component {
     loading: false,
     search: '',
     page: 1,
-    typeFilter: '',
-    types: ''
+    types: undefined
   }
 
   componentDidMount() {
@@ -34,7 +33,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page, typeFilter } = this.state;
+    const { search, page, types } = this.state;
 
     this.setState({ loading: true });
 
@@ -43,11 +42,9 @@ class App extends Component {
         .get(POKEMON_API_URL)
         .query({ pokemon: search })
         .query({ page: page })
-        .query({ sort: typeFilter });
+        .query({ type: types || undefined });
 
-      this.setState({ pokemon: response.body.results, });
-      const pokemonType = [...new Set(response.body.results.map(poke => poke.type_1))];
-      this.setState({ types: pokemonType });
+      this.setState({ pokemon: response.body.results });
 
     }
 
@@ -60,9 +57,9 @@ class App extends Component {
     }
   }
 
-  handleSearch = ({ search }) => {
+  handleSearch = ({ search, typeFilter }) => {
     this.setState(
-      { search: search, page: 1 },
+      { search: search, page: 1, types: typeFilter },
       () => this.fetchPokemon()
     );
   }

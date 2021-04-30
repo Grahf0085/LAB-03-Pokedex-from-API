@@ -5,7 +5,8 @@ export default class PokemonSearch extends Component {
 
   state = {
     search: '',
-    sortField: ''
+    sortField: '',
+    typeFilter: ''
   }
 
   handleSearchChange = ({ target }) => {
@@ -37,10 +38,11 @@ export default class PokemonSearch extends Component {
 
   render() {
 
-    const { search, sortField, typeFilter } = this.state;
+    const { search, sortField } = this.state;
 
     // const { nameSearch, typeFilter, sortField } = this.state;
     const { type } = this.props;
+    console.log(type);
     return (
 
       <form className="PokemonSearch" onSubmit={this.handleSubmit}>
@@ -56,20 +58,28 @@ export default class PokemonSearch extends Component {
           value={sortField}
           onChange={this.handleSortField}
         >
-          <option value="Attack">Attack</option>
 
         </select>
 
         <select
           name="typeFilter"
-          value={typeFilter}
+          value={type}
           onChange={this.handleTypeFilter}
         >
 
-          <option value="">Type</option>
+          <option name="all" value="">All</option>
+          <option key="grass" value="grass">Grass</option>
+          <option key="fire" value="fire">Fire</option>
+          <option key="water" value="water">Water</option>
+          <option key="bug" value="bug">Bug</option>
+          <option key="normal" value="normal">Normal</option>
+
+
+
+          {/* <option value="">Type</option>
           {type.map(aType => (
             <option key={aType} value={aType}>{aType}</option>
-          ))}
+          ))} */}
         </select>
 
       </form >
