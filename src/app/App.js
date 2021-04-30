@@ -11,7 +11,6 @@ import Paging from '../Paging';
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
 
 // const pokemonShape = [...new Set(pokemon.map(poke => poke.shape))];
-// const pokemonType = [...new Set(pokemon.map(poke => poke.type_1))];
 
 class App extends Component {
 
@@ -19,7 +18,9 @@ class App extends Component {
     pokemon: null,
     loading: false,
     search: '',
-    page: 1
+    page: 1,
+    typeFilter: '',
+    types: ''
   }
 
   componentDidMount() {
@@ -33,7 +34,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page } = this.state;
+    const { search, page, typeFilter } = this.state;
 
     this.setState({ loading: true });
 
@@ -41,9 +42,13 @@ class App extends Component {
       const response = await request
         .get(POKEMON_API_URL)
         .query({ pokemon: search })
-        .query({ page: page });
+        .query({ page: page })
+        .query({ sort: typeFilter });
 
-      this.setState({ pokemon: response.body.results });
+      this.setState({ pokemon: response.body.results, });
+      const pokemonType = [...new Set(response.body.results.map(poke => poke.type_1))];
+      this.setState({ types: pokemonType });
+
     }
 
     catch (err) {
@@ -99,7 +104,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, loading, page } = this.state;
+    const { pokemon, loading, page, types } = this.state;
 
     return (
 
@@ -110,7 +115,7 @@ class App extends Component {
         {/* <PokemonSearch shape={pokemonShape} types={pokemonType} onSearch={this.handleSearch} /> */}
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}
@@ -127,7 +132,7 @@ class App extends Component {
             : <p>Sorry no pokes for you</p>)
           }
 
-          {loading && <img className="loading" src="loading.gif" alt="loading" />}
+          {loading && <img className="loading" src="./loading.gif" alt="loading" />}
 
         </main>
 

@@ -4,7 +4,8 @@ import './PokemonSearch.css';
 export default class PokemonSearch extends Component {
 
   state = {
-    search: ''
+    search: '',
+    sortField: ''
   }
 
   handleSearchChange = ({ target }) => {
@@ -15,13 +16,13 @@ export default class PokemonSearch extends Component {
   //   this.setState({ nameSearch: target.value });
   // }
 
-  // handleTypeFilter = ({ target }) => {
-  //   this.setState({ typeFilter: target.value });
-  // }
+  handleTypeFilter = ({ target }) => {
+    this.setState({ typeFilter: target.value });
+  }
 
-  // handleSortField = ({ target }) => {
-  //   this.setState({ sortField: target.value });
-  // }
+  handleSortField = ({ target }) => {
+    this.setState({ sortField: target.value });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -36,11 +37,10 @@ export default class PokemonSearch extends Component {
 
   render() {
 
-    const { search } = this.state;
+    const { search, sortField, typeFilter } = this.state;
 
     // const { nameSearch, typeFilter, sortField } = this.state;
-    // const { types, shape } = this.props;
-
+    const { type } = this.props;
     return (
 
       <form className="PokemonSearch" onSubmit={this.handleSubmit}>
@@ -51,40 +51,28 @@ export default class PokemonSearch extends Component {
           onChange={this.handleSearchChange}
         />
 
-        {/* <select
+        <select
+          name=""
+          value={sortField}
+          onChange={this.handleSortField}
+        >
+          <option value="Attack">Attack</option>
+
+        </select>
+
+        <select
           name="typeFilter"
           value={typeFilter}
           onChange={this.handleTypeFilter}
         >
 
           <option value="">Type</option>
-          {types.map(aType => (
+          {type.map(aType => (
             <option key={aType} value={aType}>{aType}</option>
           ))}
         </select>
 
-        <label>
-          Name:
-          <input
-            name="nameSearch"
-            value={nameSearch}
-            onChange={this.handleNameSearch}
-          />
-        </label>
-
-        <select
-          name="sortField"
-          value={sortField}
-          onChange={this.handleSortField}
-        >
-          <option value="">Shape</option>
-          {shape.map(aShape => (
-            <option key={aShape} value={aShape}>{aShape}</option>
-          ))}
-
-        </select> */}
-
-      </form>
+      </form >
 
     );
   }
