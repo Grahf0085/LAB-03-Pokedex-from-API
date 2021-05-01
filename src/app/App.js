@@ -29,7 +29,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page, types, shapes, attack } = this.state;
+    const { search, page, types, attack } = this.state;
 
     this.setState({ loading: true });
 
@@ -39,7 +39,6 @@ class App extends Component {
         .query({ pokemon: search })
         .query({ page: page })
         .query({ type: types || undefined })
-        .query({ shape: shapes || undefined })
         .query({ attack: attack || 0 });
 
       this.setState({ pokemon: response.body.results });
@@ -55,9 +54,9 @@ class App extends Component {
     }
   }
 
-  handleSearch = ({ search, typeFilter, shapeFilter, attackFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, shapes: shapeFilter, attack: attackFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter },
       () => this.fetchPokemon()
     );
   }
@@ -78,7 +77,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, loading, page, types, shapes, attack } = this.state;
+    const { pokemon, loading, page, types, attack } = this.state;
 
     return (
 
@@ -87,7 +86,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} shape={shapes} attack={attack} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} attack={attack} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}

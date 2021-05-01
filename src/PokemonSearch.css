@@ -3,3 +3,8 @@
   background: #C7FFED;
 
 }
+
+h3 {
+  display: inline;
+  margin: 5px;
+}

@@ -7,16 +7,11 @@ export default class PokemonSearch extends Component {
     search: '',
     // sortField: '',
     typeFilter: '',
-    shapeFilter: '',
     attackFilter: ''
   }
 
   handleSearchChange = ({ target }) => {
     this.setState({ search: target.value });
-  }
-
-  handleShapeFilter = ({ target }) => {
-    this.setState({ shapeFilter: target.value });
   }
 
   handleTypeFilter = ({ target }) => {
@@ -42,17 +37,22 @@ export default class PokemonSearch extends Component {
 
     const { search } = this.state;
 
-    const { type, shape, attack } = this.props;
+    const { type, attack } = this.props;
 
     return (
 
       <form className="PokemonSearch" onSubmit={this.handleSubmit}>
 
-        <input
-          name="search"
-          value={search}
-          onChange={this.handleSearchChange}
-        />
+        <label>
+
+          <h3>Name: </h3>
+          <input
+            name="search"
+            value={search}
+            onChange={this.handleSearchChange}
+          />
+
+        </label>
 
         {/* <select
           name=""
@@ -62,45 +62,40 @@ export default class PokemonSearch extends Component {
 
         </select> */}
 
-        <select
-          name="typeFilter"
-          value={type}
-          onChange={this.handleTypeFilter}
-        >
-          console.log(type);
-          <option name="all" value="">All</option>
-          <option key="grass" value="grass">Grass</option>
-          <option key="fire" value="fire">Fire</option>
-          <option key="water" value="water">Water</option>
-          <option key="bug" value="bug">Bug</option>
-          <option key="normal" value="normal">Normal</option>
+        <label>
 
+          <h3>Type: </h3>
+          <select
+            name="typeFilter"
+            value={type}
+            onChange={this.handleTypeFilter}
+          >
+            console.log(type);
+            <option name="all" value="">All</option>
+            <option key="grass" value="grass">Grass</option>
+            <option key="fire" value="fire">Fire</option>
+            <option key="water" value="water">Water</option>
+            <option key="bug" value="bug">Bug</option>
+            <option key="normal" value="normal">Normal</option>
 
-
-          {/* <option value="">Type</option>
+            {/* <option value="">Type</option>
           {type.map(aType => (
             <option key={aType} value={aType}>{aType}</option>
           ))} */}
-        </select>
+          </select>
 
-        <select
-          name="shapeFilter"
-          value={shape}
-          onChange={this.handleShapeFilter}
-        >
+        </label>
 
-          <option name="all" value="">All</option>
-          <option name="upright" value="upright">Upright</option>
-          <option name="na" value="NA">NA</option>
+        <label>
+          <h3>Attack: </h3>
+          <input
+            name="attack"
+            value={attack}
+            onChange={this.handleAttackFilter}
+          >
+          </input>
 
-        </select>
-
-        <input
-          name="attack"
-          value={attack}
-          onChange={this.handleAttackFilter}
-        >
-        </input>
+        </label>
 
       </form >
 
