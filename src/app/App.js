@@ -19,7 +19,7 @@ class App extends Component {
     page: 1,
     types: undefined,
     shapes: undefined,
-    attack: undefined
+    attack: 0
   }
 
   componentDidMount() {
@@ -40,7 +40,7 @@ class App extends Component {
         .query({ page: page })
         .query({ type: types || undefined })
         .query({ shape: shapes || undefined })
-        .query({ attack: attack });
+        .query({ attack: attack || 0 });
 
       this.setState({ pokemon: response.body.results });
 
