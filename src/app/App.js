@@ -10,8 +10,6 @@ import Paging from '../Paging';
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
 
-// const pokemonShape = [...new Set(pokemon.map(poke => poke.shape))];
-
 class App extends Component {
 
   state = {
@@ -19,21 +17,19 @@ class App extends Component {
     loading: false,
     search: '',
     page: 1,
-    types: undefined
+    types: undefined,
+    shapes: undefined,
+    attack: undefined
   }
 
   componentDidMount() {
     this.fetchPokemon();
   }
 
-  // async componentDidMount() {
-  //   const response = await request.get(POKEMON_API_URL);
-  //   this.setState({ pokemon: response.body.results });
-  // }
 
   async fetchPokemon() {
 
-    const { search, page, types } = this.state;
+    const { search, page, types, shapes, attack } = this.state;
 
     this.setState({ loading: true });
 
@@ -42,7 +38,9 @@ class App extends Component {
         .get(POKEMON_API_URL)
         .query({ pokemon: search })
         .query({ page: page })
-        .query({ type: types || undefined });
+        .query({ type: types || undefined })
+        .query({ shape: shapes || undefined })
+        .query({ attack: attack });
 
       this.setState({ pokemon: response.body.results });
 
@@ -57,33 +55,12 @@ class App extends Component {
     }
   }
 
-  handleSearch = ({ search, typeFilter }) => {
+  handleSearch = ({ search, typeFilter, shapeFilter, attackFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter },
+      { search: search, page: 1, types: typeFilter, shapes: shapeFilter, attack: attackFilter },
       () => this.fetchPokemon()
     );
   }
-
-  // handleSearch = ({ nameSearch, typeFilter, sortField }) => {
-
-  //   const nameRegex = new RegExp(nameSearch, 'i');
-
-  //   const searchData = pokemon
-  //     .filter(pokeOne => {
-  //       return !nameSearch || pokeOne.pokemon.match(nameRegex);
-  //     })
-  //     .filter(pokeOne => {
-  //       return !typeFilter || pokeOne.type_1 === typeFilter;
-  //     })
-  //     .sort((a, b) => {
-  //       if (a[sortField] < b[sortField]) return 1;
-  //       if (a[sortField] > b[sortField]) return -1;
-  //       return 0;
-  //     });
-  //   console.log(sortField);
-  //   this.setState({ poke: searchData });
-
-  // }
 
   handlePrevPage = () => {
     this.setState(
@@ -101,7 +78,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, loading, page, types } = this.state;
+    const { pokemon, loading, page, types, shapes, attack } = this.state;
 
     return (
 
@@ -109,10 +86,8 @@ class App extends Component {
 
         <Header />
 
-        {/* <PokemonSearch shape={pokemonShape} types={pokemonType} onSearch={this.handleSearch} /> */}
-
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} shape={shapes} attack={attack} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}
@@ -121,8 +96,6 @@ class App extends Component {
         </section>
 
         <main>
-
-          {/* <PokemonList pokemon={pokemon} /> */}
 
           {pokemon && (pokemon.length
             ? <PokemonList pokemon={pokemon} />
