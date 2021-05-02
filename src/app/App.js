@@ -22,7 +22,9 @@ class App extends Component {
     types: [],
     typesArray: [],
     shapes: undefined,
-    attack: 0
+    attack: 0,
+    direction: 'asc',
+    perPage: 20
   }
 
   componentDidMount() {
@@ -30,10 +32,9 @@ class App extends Component {
     this.fetchTypes();
   }
 
-
   async fetchPokemon() {
 
-    const { search, page, types, attack } = this.state;
+    const { search, page, types, attack, direction, perPage } = this.state;
 
     this.setState({ loading: true });
 
@@ -44,7 +45,9 @@ class App extends Component {
         .query({ sort: 'pokemon' })
         .query({ page: page })
         .query({ type: types || [] })
-        .query({ attack: attack || 0 });
+        .query({ attack: attack || 0 })
+        .query({ direction: direction })
+        .query({ perPage: perPage });
 
       this.setState({ pokemon: response.body.results });
 
@@ -82,9 +85,9 @@ class App extends Component {
 
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter, sortFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter, sortFilter, directionFilter, perPageFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter, sort: sortFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter, sort: sortFilter, direction: directionFilter, perPage: perPageFilter },
       () => this.fetchPokemon(),
     );
   }
@@ -105,7 +108,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, page, types, typesArray, attack, sort } = this.state;
+    const { pokemon, page, types, typesArray, attack, direction, perPage } = this.state;
 
     return (
 
@@ -114,7 +117,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} sort={sort} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} perPage={perPage} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}

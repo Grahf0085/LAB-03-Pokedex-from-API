@@ -5,9 +5,11 @@ export default class PokemonSearch extends Component {
 
   state = {
     search: '',
-    sortFilter: '',
     typeFilter: '',
-    attackFilter: ''
+    attackFilter: '',
+    sortFilter: '',
+    directionFilter: '',
+    perPageFilter: '',
   }
 
   handleSearchChange = ({ target }) => {
@@ -27,6 +29,14 @@ export default class PokemonSearch extends Component {
     this.setState({ sortFilter: target.value });
   }
 
+  handleDirectionFilter = ({ target }) => {
+    this.setState({ directionFilter: target.value });
+  }
+
+  handlePerPage = ({ target }) => {
+    this.setState({ perPageFilter: target.value });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSearch(this.state);
@@ -42,7 +52,7 @@ export default class PokemonSearch extends Component {
 
     const { search } = this.state;
 
-    const { type, attack, sort, typesArray } = this.props;
+    const { type, attack, typesArray, direction, perPage } = this.props;
 
     return (
 
@@ -59,16 +69,38 @@ export default class PokemonSearch extends Component {
 
         </label>
 
-        <select
-          name=""
-          value={sort}
-          onChange={this.handleSortFilter}
-        >
+        <label>
 
-          {/* <option name="asc" value="asc">Ascending</option>
-          <option name="desc" value="desc">Descending</option> */}
+          <h3>Sort: </h3>
+          <select
+            name=""
+            value={direction}
+            onChange={this.handleDirectionFilter}
+          >
 
-        </select>
+            <option name="asc" value="asc">Ascending</option>
+            <option name="desc" value="desc">Descending</option>
+
+          </select>
+
+        </label>
+
+        <label>
+
+          <h3>Per Page: </h3>
+          <select
+            name=""
+            value={perPage}
+            onChange={this.handlePerPage}
+          >
+
+            <option name="20" value="20">20</option>
+            <option name="40" value="40">40</option>
+            <option name="50" value="50">50</option>
+
+          </select>
+
+        </label>
 
         <label>
 
