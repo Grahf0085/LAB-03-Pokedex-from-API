@@ -9,21 +9,25 @@ import request from 'superagent';
 import Paging from '../Paging';
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
+const TYPES_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex/types';
 
 class App extends Component {
 
   state = {
     pokemon: null,
+    sort: '',
     loading: false,
     search: '',
     page: 1,
-    types: undefined,
+    types: [],
+    typesArray: [],
     shapes: undefined,
     attack: 0
   }
 
   componentDidMount() {
     this.fetchPokemon();
+    this.fetchTypes();
   }
 
 
@@ -37,8 +41,9 @@ class App extends Component {
       const response = await request
         .get(POKEMON_API_URL)
         .query({ pokemon: search })
+        .query({ sort: 'pokemon' })
         .query({ page: page })
-        .query({ type: types || undefined })
+        .query({ type: types || [] })
         .query({ attack: attack || 0 });
 
       this.setState({ pokemon: response.body.results });
@@ -54,10 +59,33 @@ class App extends Component {
     }
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter }) => {
+  async fetchTypes() {
+    this.setState({ loading: true });
+
+    try {
+      const response = await request
+        .get(TYPES_API_URL);
+
+      this.setState({
+        types: response.body.map(type => type.type),
+        typesArray: response.body.map(type => type.type)
+      });
+    }
+
+    catch (err) {
+      console.log(err);
+    }
+
+    finally {
+      this.setState({ loading: false });
+    }
+
+  }
+
+  handleSearch = ({ search, typeFilter, attackFilter, sortFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter },
-      () => this.fetchPokemon()
+      { search: search, page: 1, types: typeFilter, attack: attackFilter, sort: sortFilter },
+      () => this.fetchPokemon(),
     );
   }
 
@@ -77,7 +105,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, loading, page, types, attack } = this.state;
+    const { pokemon, page, types, typesArray, attack, sort } = this.state;
 
     return (
 
@@ -86,7 +114,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} attack={attack} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} sort={sort} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}
@@ -96,12 +124,10 @@ class App extends Component {
 
         <main>
 
-          {pokemon && (pokemon.length
+          {pokemon && pokemon.length
             ? <PokemonList pokemon={pokemon} />
-            : <p>Sorry no pokes for you</p>)
+            : <p>Sorry no pokes for you</p>
           }
-
-          {loading && <img className="loading" src="./loading.gif" alt="loading" />}
 
         </main>
 

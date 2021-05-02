@@ -5,7 +5,7 @@ export default class PokemonSearch extends Component {
 
   state = {
     search: '',
-    // sortField: '',
+    sortFilter: '',
     typeFilter: '',
     attackFilter: ''
   }
@@ -16,10 +16,15 @@ export default class PokemonSearch extends Component {
 
   handleTypeFilter = ({ target }) => {
     this.setState({ typeFilter: target.value });
+
   }
 
   handleAttackFilter = ({ target }) => {
     this.setState({ attackFilter: target.value });
+  }
+
+  handleSortFilter = ({ target }) => {
+    this.setState({ sortFilter: target.value });
   }
 
   handleSubmit = (e) => {
@@ -37,7 +42,7 @@ export default class PokemonSearch extends Component {
 
     const { search } = this.state;
 
-    const { type, attack } = this.props;
+    const { type, attack, sort, typesArray } = this.props;
 
     return (
 
@@ -54,13 +59,16 @@ export default class PokemonSearch extends Component {
 
         </label>
 
-        {/* <select
+        <select
           name=""
-          value={sortField}
-          onChange={this.handleSortField}
+          value={sort}
+          onChange={this.handleSortFilter}
         >
 
-        </select> */}
+          {/* <option name="asc" value="asc">Ascending</option>
+          <option name="desc" value="desc">Descending</option> */}
+
+        </select>
 
         <label>
 
@@ -70,18 +78,11 @@ export default class PokemonSearch extends Component {
             value={type}
             onChange={this.handleTypeFilter}
           >
-            console.log(type);
-            <option name="all" value="">All</option>
-            <option key="grass" value="grass">Grass</option>
-            <option key="fire" value="fire">Fire</option>
-            <option key="water" value="water">Water</option>
-            <option key="bug" value="bug">Bug</option>
-            <option key="normal" value="normal">Normal</option>
 
-            {/* <option value="">Type</option>
-          {type.map(aType => (
-            <option key={aType} value={aType}>{aType}</option>
-          ))} */}
+            <option value="">Type</option>
+            {typesArray.map(aType => (
+              <option key={aType} value={aType}>{aType}</option>
+            ))}
           </select>
 
         </label>
