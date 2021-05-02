@@ -10,6 +10,7 @@ export default class PokemonSearch extends Component {
     sortFilter: '',
     directionFilter: '',
     perPageFilter: '',
+    sortByFilter: ''
   }
 
   handleSearchChange = ({ target }) => {
@@ -37,6 +38,10 @@ export default class PokemonSearch extends Component {
     this.setState({ perPageFilter: target.value });
   }
 
+  handleSortBy = ({ target }) => {
+    this.setState({ sortByFilter: target.value });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSearch(this.state);
@@ -52,7 +57,7 @@ export default class PokemonSearch extends Component {
 
     const { search } = this.state;
 
-    const { type, attack, typesArray, direction, perPage } = this.props;
+    const { type, attack, typesArray, direction, perPage, sortBy } = this.props;
 
     return (
 
@@ -71,7 +76,26 @@ export default class PokemonSearch extends Component {
 
         <label>
 
-          <h3>Sort: </h3>
+          <h3>Sort By: </h3>
+          <select
+            name=""
+            value={sortBy}
+            onChange={this.handleSortBy}
+          >
+
+            <option name="name" value="pokemon">Name</option>
+            <option name="attack" value="attack">Attack</option>
+            <option name="type" value="type_1">Type</option>
+            <option name="color" value="color_1">Color</option>
+
+
+          </select>
+
+        </label>
+
+        <label>
+
+          <h3>Sort Direction: </h3>
           <select
             name=""
             value={direction}

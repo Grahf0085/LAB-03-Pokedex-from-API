@@ -24,7 +24,8 @@ class App extends Component {
     shapes: undefined,
     attack: 0,
     direction: 'asc',
-    perPage: 20
+    perPage: 20,
+    sortBy: 'pokemon'
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page, types, attack, direction, perPage } = this.state;
+    const { search, page, types, attack, direction, perPage, sortBy } = this.state;
 
     this.setState({ loading: true });
 
@@ -42,7 +43,7 @@ class App extends Component {
       const response = await request
         .get(POKEMON_API_URL)
         .query({ pokemon: search })
-        .query({ sort: 'pokemon' })
+        .query({ sort: sortBy })
         .query({ page: page })
         .query({ type: types || [] })
         .query({ attack: attack || 0 })
@@ -85,9 +86,9 @@ class App extends Component {
 
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter, sortFilter, directionFilter, perPageFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter, sortFilter, directionFilter, perPageFilter, sortByFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter, sort: sortFilter, direction: directionFilter, perPage: perPageFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter, sort: sortFilter, direction: directionFilter, perPage: perPageFilter, sortBy: sortByFilter },
       () => this.fetchPokemon(),
     );
   }
@@ -108,7 +109,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, page, types, typesArray, attack, direction, perPage } = this.state;
+    const { pokemon, page, types, typesArray, attack, direction, perPage, sortBy } = this.state;
 
     return (
 
@@ -117,7 +118,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} perPage={perPage} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} perPage={perPage} sortBy={sortBy} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}
