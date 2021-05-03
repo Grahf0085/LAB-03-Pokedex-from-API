@@ -82,9 +82,9 @@ class App extends Component {
 
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter, sortFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter, sort: sortFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter },
       () => this.fetchPokemon(),
     );
   }
@@ -105,7 +105,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, page, types, typesArray, attack, sort } = this.state;
+    const { pokemon, page, types, typesArray, attack } = this.state;
 
     return (
 
@@ -114,7 +114,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} sort={sort} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}
