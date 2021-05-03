@@ -1,6 +1,11 @@
+@font-face {
+  font-family: Pokemon;
+  src: url(./fonts/Pokemon\ Solid.ttf);
+}
+
 .PokemonItem {
   list-style: none;
-  background-color: #9C7178;
+  /* background-color: #9C7178; */
   border: #B592A0 2px solid;
 
   display: grid;
@@ -19,6 +24,8 @@
 
 .PokemonItem h3 {
   margin: 0px;
+  font-family: 'Pokemon';
+
 }
 
 .PokemonItem h2 {

@@ -132,7 +132,7 @@ class App extends Component {
 
           {pokemon && pokemon.length
             ? <PokemonList pokemon={pokemon} />
-            : <p>Sorry no pokes for you</p>
+            : <p>Sorry no pokemon for you</p>
           }
 
         </main>

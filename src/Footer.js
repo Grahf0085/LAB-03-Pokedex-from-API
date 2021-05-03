@@ -5,7 +5,7 @@ export default class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        <h1>Footer</h1>
+        <h1>Copyleft 2021</h1>
       </footer>
     );
   }

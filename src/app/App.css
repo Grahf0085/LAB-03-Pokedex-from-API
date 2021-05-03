@@ -1,7 +1,7 @@
 .App {
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: .1fr auto 1fr;
   background-color: #C7FFED;
 }
 
@@ -9,10 +9,6 @@
   overflow: auto;
 }
 
-.loading {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 500px;
-  object-fit: contain;
+.search-options {
+  height:fit-content;
 }
