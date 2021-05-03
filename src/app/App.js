@@ -24,7 +24,8 @@ class App extends Component {
     attack: 0,
     defence: 0,
     direction: 'asc',
-    sortBy: 'pokemon'
+    sortBy: 'pokemon',
+    perPage: 6
   }
 
   componentDidMount() {
@@ -35,7 +36,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page, types, attack, direction, sortBy, defence } = this.state;
+    const { search, page, types, attack, direction, sortBy, defence, perPage } = this.state;
 
     this.setState({ loading: true });
 
@@ -48,7 +49,8 @@ class App extends Component {
         .query({ type: types || [] })
         .query({ attack: attack || 0 })
         .query({ defense: defence || 0 })
-        .query({ direction: direction });
+        .query({ direction: direction })
+        .query({ perPage: perPage });
 
       this.setState({ pokemon: response.body.results });
 
@@ -86,9 +88,9 @@ class App extends Component {
 
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter, directionFilter, sortFilter, defenceFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter, directionFilter, sortFilter, defenceFilter, perPageFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter, direction: directionFilter, sortBy: sortFilter, defence: defenceFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter, direction: directionFilter, sortBy: sortFilter, defence: defenceFilter, perPage: perPageFilter },
       () => this.fetchPokemon(),
     );
   }
@@ -109,7 +111,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, page, types, typesArray, attack, direction, sortBy, defence } = this.state;
+    const { pokemon, page, types, typesArray, attack, direction, sortBy, defence, perPage } = this.state;
 
     return (
 
@@ -118,7 +120,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} sortBy={sortBy} defence={defence} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} sortBy={sortBy} defence={defence} perPage={perPage} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}
