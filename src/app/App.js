@@ -22,6 +22,7 @@ class App extends Component {
     typesArray: [],
     shapes: undefined,
     attack: 0,
+    defence: 0,
     direction: 'asc',
     sortBy: 'pokemon'
   }
@@ -34,7 +35,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page, types, attack, direction, sortBy } = this.state;
+    const { search, page, types, attack, direction, sortBy, defence } = this.state;
 
     this.setState({ loading: true });
 
@@ -46,6 +47,7 @@ class App extends Component {
         .query({ page: page })
         .query({ type: types || [] })
         .query({ attack: attack || 0 })
+        .query({ defense: defence || 0 })
         .query({ direction: direction });
 
       this.setState({ pokemon: response.body.results });
@@ -84,9 +86,9 @@ class App extends Component {
 
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter, directionFilter, sortFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter, directionFilter, sortFilter, defenceFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter, direction: directionFilter, sortBy: sortFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter, direction: directionFilter, sortBy: sortFilter, defence: defenceFilter },
       () => this.fetchPokemon(),
     );
   }
@@ -107,7 +109,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, page, types, typesArray, attack, direction, sortBy } = this.state;
+    const { pokemon, page, types, typesArray, attack, direction, sortBy, defence } = this.state;
 
     return (
 
@@ -116,7 +118,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} sortBy={sortBy} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} sortBy={sortBy} defence={defence} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}

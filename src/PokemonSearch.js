@@ -8,7 +8,8 @@ export default class PokemonSearch extends Component {
     typeFilter: '',
     attackFilter: '',
     directionFilter: '',
-    sortFilter: ''
+    sortFilter: '',
+    defenceFilter: ''
   }
 
   handleSearchChange = ({ target }) => {
@@ -22,6 +23,10 @@ export default class PokemonSearch extends Component {
 
   handleAttackFilter = ({ target }) => {
     this.setState({ attackFilter: target.value });
+  }
+
+  handleDefenceFilter = ({ target }) => {
+    this.setState({ defenceFilter: target.value });
   }
 
   handleDirectionFilter = ({ target }) => {
@@ -47,7 +52,7 @@ export default class PokemonSearch extends Component {
 
     const { search } = this.state;
 
-    const { type, attack, typesArray, direction, sortBy } = this.props;
+    const { type, attack, typesArray, direction, sortBy, defence } = this.props;
 
     return (
 
@@ -123,6 +128,17 @@ export default class PokemonSearch extends Component {
             name="attack"
             value={attack}
             onChange={this.handleAttackFilter}
+          >
+          </input>
+
+        </label>
+
+        <label>
+          <h3>Defence: </h3>
+          <input
+            name="defence"
+            value={defence}
+            onChange={this.handleDefenceFilter}
           >
           </input>
 
