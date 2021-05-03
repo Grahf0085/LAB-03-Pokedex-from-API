@@ -22,7 +22,8 @@ class App extends Component {
     types: [],
     typesArray: [],
     shapes: undefined,
-    attack: 0
+    attack: 0,
+    direction: 'asc'
   }
 
   componentDidMount() {
@@ -33,7 +34,7 @@ class App extends Component {
 
   async fetchPokemon() {
 
-    const { search, page, types, attack } = this.state;
+    const { search, page, types, attack, direction } = this.state;
 
     this.setState({ loading: true });
 
@@ -44,7 +45,8 @@ class App extends Component {
         .query({ sort: 'pokemon' })
         .query({ page: page })
         .query({ type: types || [] })
-        .query({ attack: attack || 0 });
+        .query({ attack: attack || 0 })
+        .query({ direction: direction });
 
       this.setState({ pokemon: response.body.results });
 
@@ -82,9 +84,9 @@ class App extends Component {
 
   }
 
-  handleSearch = ({ search, typeFilter, attackFilter }) => {
+  handleSearch = ({ search, typeFilter, attackFilter, directionFilter }) => {
     this.setState(
-      { search: search, page: 1, types: typeFilter, attack: attackFilter },
+      { search: search, page: 1, types: typeFilter, attack: attackFilter, direction: directionFilter },
       () => this.fetchPokemon(),
     );
   }
@@ -105,7 +107,7 @@ class App extends Component {
 
   render() {
 
-    const { pokemon, page, types, typesArray, attack } = this.state;
+    const { pokemon, page, types, typesArray, attack, direction } = this.state;
 
     return (
 
@@ -114,7 +116,7 @@ class App extends Component {
         <Header />
 
         <section className="search-options">
-          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} />
+          <PokemonSearch onSearch={this.handleSearch} type={types} typesArray={typesArray} attack={attack} direction={direction} />
           <Paging
             page={page}
             onPrev={this.handlePrevPage}

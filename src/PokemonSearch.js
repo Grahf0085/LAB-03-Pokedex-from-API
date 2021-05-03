@@ -6,7 +6,8 @@ export default class PokemonSearch extends Component {
   state = {
     search: '',
     typeFilter: '',
-    attackFilter: ''
+    attackFilter: '',
+    directionFilter: '',
   }
 
   handleSearchChange = ({ target }) => {
@@ -20,6 +21,10 @@ export default class PokemonSearch extends Component {
 
   handleAttackFilter = ({ target }) => {
     this.setState({ attackFilter: target.value });
+  }
+
+  handleDirectionFilter = ({ target }) => {
+    this.setState({ directionFilter: target.value });
   }
 
   handleSubmit = (e) => {
@@ -37,7 +42,7 @@ export default class PokemonSearch extends Component {
 
     const { search } = this.state;
 
-    const { type, attack, typesArray } = this.props;
+    const { type, attack, typesArray, direction } = this.props;
 
     return (
 
@@ -51,6 +56,22 @@ export default class PokemonSearch extends Component {
             value={search}
             onChange={this.handleSearchChange}
           />
+
+        </label>
+
+        <label>
+
+          <h3>Sort Direction: </h3>
+          <select
+            name=""
+            value={direction}
+            onChange={this.handleDirectionFilter}
+          >
+
+            <option name="asc" value="asc">Ascending</option>
+            <option name="desc" value="desc">Descending</option>
+
+          </select>
 
         </label>
 
