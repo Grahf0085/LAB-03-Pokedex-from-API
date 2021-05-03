@@ -50,7 +50,7 @@ class App extends Component {
         .query({ attack: attack || 0 })
         .query({ defense: defence || 0 })
         .query({ direction: direction })
-        .query({ perPage: perPage });
+        .query({ perPage: perPage || 6 });
 
       this.setState({ pokemon: response.body.results });
 
